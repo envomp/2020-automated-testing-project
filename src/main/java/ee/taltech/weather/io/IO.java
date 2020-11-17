@@ -1,4 +1,4 @@
-package ee.taltech.weather.input;
+package ee.taltech.weather.io;
 
 import java.io.InputStream;
 import java.io.OutputStream;

@@ -1,4 +1,4 @@
-package ee.taltech.weather.input;
+package ee.taltech.weather.io;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,13 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class ConsoleIOTest {
 
 	@Test
-	void readReadsAndWrites() {
+	void invokeReadsAndWrites() {
 		InputStream in = new java.io.ByteArrayInputStream("in".getBytes());
 		OutputStream outputStream = new ByteArrayOutputStream();
-		PrintStream printStream = new PrintStream(outputStream);
 
-		ConsoleIO.read(in, printStream);
+		ConsoleIO.invoke(in, outputStream);
 
-		assertTrue(printStream.toString().isBlank());
+		assertFalse(outputStream.toString().isBlank());
 	}
 }
