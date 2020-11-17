@@ -19,7 +19,7 @@ public class WeatherReport {
 
 	@SneakyThrows
 	public static String fetchFromAPI(String cityName, String token) {
-		String url = "api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + token;
+		String url = "api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=metric&appid=" + token;
 		ObjectMapper mapper = new ObjectMapper();
 
 		try {
