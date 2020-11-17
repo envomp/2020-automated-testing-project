@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-public class ConsoleIO implements IO {
+public class ConsoleIO {
 
 	@SneakyThrows
 	public static void invoke(InputStream inputStream, OutputStream outputStream) {
