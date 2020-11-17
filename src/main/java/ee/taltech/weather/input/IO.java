@@ -3,8 +3,8 @@ package ee.taltech.weather.input;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public interface IO {
+interface IO {
 
-	void read(InputStream inputStream, OutputStream outputStream);
+	static void read(InputStream inputStream, OutputStream outputStream) {}
 
 }

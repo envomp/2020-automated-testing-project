@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 public class ConsoleIO implements IO {
 
-	public void read(InputStream inputStream, OutputStream outputStream) {
+	public static void read(InputStream inputStream, OutputStream outputStream) {
 
 	}
 
