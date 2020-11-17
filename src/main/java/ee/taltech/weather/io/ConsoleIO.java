@@ -1,6 +1,6 @@
 package ee.taltech.weather.io;
 
-import ee.taltech.weather.report.WeatherReport;
+import ee.taltech.weather.io.report.WeatherReport;
 import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
@@ -13,9 +13,8 @@ public class ConsoleIO {
 	@SneakyThrows
 	public static void invoke(InputStream inputStream, OutputStream outputStream) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-		String output = WeatherReport.constructJson(reader.readLine());
-		outputStream.write(output.getBytes());
+		String report = WeatherReport.fetchFromAPI(reader.readLine(), "");
+		outputStream.write(report.getBytes());
 		outputStream.flush();
 	}
-
 }
