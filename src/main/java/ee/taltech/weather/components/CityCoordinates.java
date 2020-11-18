@@ -1,4 +1,4 @@
-package ee.taltech.weather.api.report;
+package ee.taltech.weather.components;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CityCoordinatesDTO {
+public class CityCoordinates {
 	@Min(-180)
 	@Max(180)
 	private float lat;

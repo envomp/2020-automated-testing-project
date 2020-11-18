@@ -1,5 +1,6 @@
 package ee.taltech.weather.api.report;
 
+import ee.taltech.weather.components.CityCoordinates;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,7 +9,7 @@ class CityCoordinatesDTOTest {
 
 	@Test
 	void formatted() {
-		CityCoordinatesDTO dto = CityCoordinatesDTO.builder().lat(1.1111f).lon(179).build();
+		CityCoordinates dto = CityCoordinates.builder().lat(1.1111f).lon(179).build();
 
 		String actual = dto.formatted();
 
