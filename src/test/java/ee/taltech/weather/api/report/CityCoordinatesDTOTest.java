@@ -16,9 +16,4 @@ class CityCoordinatesDTOTest {
 
 		assertEquals("1.11,179.00", actual);
 	}
-
-	@Test
-	void testAlwaysFails() {
-		fail();
-	}
 }
