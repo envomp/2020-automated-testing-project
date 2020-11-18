@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ClimateDTO {
-	private long temp;
-	private long humidity;
-	private long pressure;
+	private float temp;
+	private float humidity;
+	private float pressure;
 }
