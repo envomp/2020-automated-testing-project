@@ -2,11 +2,12 @@ package ee.taltech.weather.io.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ee.taltech.weather.api.ApiClient;
-import ee.taltech.weather.api.report.WeatherReportCollectionDTO;
+import ee.taltech.weather.api.report.ThreeHourIntervalWeatherReportDTO;
 import lombok.*;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -30,8 +31,9 @@ public class WeatherReport {
 		}
 	}
 
-	static String parseWeatherReportDtoInputStream(ObjectMapper mapper, InputStream inputStream) throws java.io.IOException {
-		WeatherReportCollectionDTO dto = mapper.readValue(inputStream, WeatherReportCollectionDTO.class);
+	@SneakyThrows
+	static String parseWeatherReportDtoInputStream(ObjectMapper mapper, InputStream inputStream) {
+		ThreeHourIntervalWeatherReportDTO dto = mapper.readValue(inputStream, ThreeHourIntervalWeatherReportDTO.class);
 
 		if (dto.getCod() == 200) {
 			return mapper.writeValueAsString(fromWeatherReportDTO(dto));
@@ -40,7 +42,14 @@ public class WeatherReport {
 		}
 	}
 
-	public static WeatherReport fromWeatherReportDTO(WeatherReportCollectionDTO dto) {
-		return WeatherReport.builder().build();
+	public static WeatherReport fromWeatherReportDTO(ThreeHourIntervalWeatherReportDTO dto) {
+		return WeatherReport.builder()
+				.weatherReportDetails(WeatherReportDetails.from(dto))
+				.currentWeatherReport(CurrentWeatherReport.from(dto.getToday()))
+				.forecastReport(dto.getThreeDayForecast()
+						.stream()
+						.map(ForecastReport::from)
+						.collect(Collectors.toList()))
+				.build();
 	}
 }
