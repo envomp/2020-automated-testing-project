@@ -57,7 +57,7 @@ todo
 - [ ] When an error occurs for invalid city name(s) then application logs ERROR message for that city.
 
 ### Continuous Integration
-- [ ] CI pipeline is ran when changes are pushed to master
+- [X] CI pipeline is ran when changes are pushed to master
 - [ ] CI pipeline fails if any test fails
 - [ ] CI pipeline passes when all tests have passed 
 - [ ] CI pipeline produces a log (why did it fail?)

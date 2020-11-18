@@ -4,6 +4,7 @@ import ee.taltech.weather.components.CityCoordinates;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class CityCoordinatesDTOTest {
 
@@ -14,5 +15,10 @@ class CityCoordinatesDTOTest {
 		String actual = dto.formatted();
 
 		assertEquals("1.11,179.00", actual);
+	}
+
+	@Test
+	void testAlwaysFails() {
+		fail();
 	}
 }
