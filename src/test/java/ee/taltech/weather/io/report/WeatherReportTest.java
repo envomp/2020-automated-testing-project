@@ -19,7 +19,7 @@ class WeatherReportTest {
 		ObjectMapper mapper = new ObjectMapper();
 		String json = WeatherReport.parseWeatherReportDtoInputStream(mapper, stream);
 
-		WeatherReport report = mapper.readValue(json, WeatherReport.class);
+		mapper.readValue(json, WeatherReport.class);
 
 		// parsing was successful
 	}
