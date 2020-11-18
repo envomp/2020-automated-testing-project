@@ -1,6 +1,7 @@
 package ee.taltech.weather.io.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ee.taltech.weather.api.report.ThreeHourIntervalWeatherReportDTO;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,10 @@ class WeatherReportTest {
 		InputStream stream = classloader.getResourceAsStream("sample_passed_response.json");
 		ObjectMapper mapper = new ObjectMapper();
 		String json = WeatherReport.parseWeatherReportDtoInputStream(mapper, stream);
-		WeatherReport report = mapper.readValue(json, WeatherReport.class); // assert successful parsing
+
+		WeatherReport report = mapper.readValue(json, WeatherReport.class);
+
+		// parsing was successful
 	}
 
 	@Test
@@ -26,7 +30,25 @@ class WeatherReportTest {
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 		InputStream stream = classloader.getResourceAsStream("sample_failed_response.json");
 		ObjectMapper mapper = new ObjectMapper();
+
 		String response = WeatherReport.parseWeatherReportDtoInputStream(mapper, stream);
+
 		assertEquals("city not found", response);
+	}
+
+	@Test
+	@SneakyThrows
+	void fromWeatherReportDTO() {
+		WeatherReport report = getWeatherReport();
+
+
+	}
+
+	private static WeatherReport getWeatherReport() throws java.io.IOException {
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+		InputStream stream = classloader.getResourceAsStream("sample_passed_response.json");
+		ObjectMapper mapper = new ObjectMapper();
+		ThreeHourIntervalWeatherReportDTO dto = mapper.readValue(stream, ThreeHourIntervalWeatherReportDTO.class);
+		return WeatherReport.fromWeatherReportDTO(dto);
 	}
 }
