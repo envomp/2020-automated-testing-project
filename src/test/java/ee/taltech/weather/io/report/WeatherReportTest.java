@@ -38,10 +38,23 @@ class WeatherReportTest {
 
 	@Test
 	@SneakyThrows
-	void fromWeatherReportDTO() {
+	void fromWeatherReportDtoCurrentReport() {
 		WeatherReport report = getWeatherReport();
 
+		assertEquals("2020-11-17", report.getCurrentWeatherReport().getDate());
+		assertEquals(87, report.getCurrentWeatherReport().getHumidity());
+		assertEquals(1029, report.getCurrentWeatherReport().getPressure());
+		assertEquals(278, report.getCurrentWeatherReport().getTemperature());
+	}
 
+	@Test
+	@SneakyThrows
+	void fromWeatherReportDtoReportDetails() {
+		WeatherReport report = getWeatherReport();
+
+		assertEquals("Munich", report.getWeatherReportDetails().getCity());
+		assertEquals("48.14,11.58", report.getWeatherReportDetails().getCoordinates());
+		assertEquals("Celsius", report.getWeatherReportDetails().getTemperatureUnit());
 	}
 
 	private static WeatherReport getWeatherReport() throws java.io.IOException {
