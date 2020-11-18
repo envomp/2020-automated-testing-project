@@ -6,12 +6,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CityCoordinatesDTO {
-	private long lat;
-	private long lon;
+	@Min(-180)
+	@Max(180)
+	private float lat;
+	@Min(-180)
+	@Max(180)
+	private float lon;
+
+	public String formatted() {
+		return null;
+	}
 }

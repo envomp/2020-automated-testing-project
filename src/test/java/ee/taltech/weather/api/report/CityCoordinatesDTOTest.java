@@ -1,0 +1,17 @@
+package ee.taltech.weather.api.report;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class CityCoordinatesDTOTest {
+
+	@Test
+	void formatted() {
+		CityCoordinatesDTO dto = CityCoordinatesDTO.builder().lat(1.1111f).lon(179).build();
+
+		String actual = dto.formatted();
+
+		assertEquals("1.11,179.00", actual);
+	}
+}
