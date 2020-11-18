@@ -16,7 +16,7 @@ public class ForecastReport {
 
 	public static ForecastReport from(WeatherReportDTO dto) {
 		return ForecastReport.builder()
-				.date(dto.getDt().toLocalDate().toString())
+				.date(dto.getDt().getDate().toLocalDate().toString())
 				.weather(Weather.from(dto))
 				.build();
 	}

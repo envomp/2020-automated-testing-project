@@ -27,7 +27,7 @@ public class CurrentWeatherReport {
 
 	public static CurrentWeatherReport from(WeatherReportDTO dto) {
 		return CurrentWeatherReport.builder()
-				.date(dto.getDt().toLocalDate().toString())
+				.date(dto.getDt().getDate().toLocalDate().toString())
 				.temperature(Math.round(dto.getMain().getTemp()))
 				.humidity(Math.round(dto.getMain().getHumidity()))
 				.pressure(Math.round(dto.getMain().getPressure()))
