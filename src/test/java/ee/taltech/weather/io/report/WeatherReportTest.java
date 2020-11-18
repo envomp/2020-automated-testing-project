@@ -57,6 +57,18 @@ class WeatherReportTest {
 		assertEquals("Celsius", report.getWeatherReportDetails().getTemperatureUnit());
 	}
 
+	@Test
+	@SneakyThrows
+	void fromWeatherReportDtoForecast() {
+		WeatherReport report = getWeatherReport();
+
+		assertEquals(3, report.getForecastReport().size());
+		assertEquals("2020-11-18", report.getForecastReport().get(0).getDate());
+		assertEquals(84, report.getForecastReport().get(0).getWeather().getHumidity());
+		assertEquals(1030, report.getForecastReport().get(0).getWeather().getPressure());
+		assertEquals(278, report.getForecastReport().get(0).getWeather().getTemperature());
+	}
+
 	private static WeatherReport getWeatherReport() throws java.io.IOException {
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 		InputStream stream = classloader.getResourceAsStream("sample_passed_response.json");
