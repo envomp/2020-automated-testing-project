@@ -1,10 +1,8 @@
 package ee.taltech.weather.api.report;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import ee.taltech.weather.components.DateDTO;
+import lombok.*;
 
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ import java.util.List;
 public class ThreeHourIntervalWeatherReportDTO {
 	private Object message;
 	private int cod;
-	@Size(min = 26)
+	@Size(min = 40)
 	private List<WeatherReportDTO> list;
 	private CityDTO city;
 
@@ -27,11 +25,56 @@ public class ThreeHourIntervalWeatherReportDTO {
 	}
 
 	public List<WeatherReportDTO> getThreeDayForecast() {
-		List<WeatherReportDTO> reports = new ArrayList<>();
-		for (int i = 1; i <= 3; i++) {
-			int intervalsInDay = 8;
-			reports.add(list.get(intervalsInDay * i));
+		try {
+			return generateThreeDayForecast();
+		} catch (IndexOutOfBoundsException e) {
+			throw new InvalidStructureException("Given report didn't have 3 forecast worth of data");
 		}
+	}
+
+	@SneakyThrows
+	private List<WeatherReportDTO> generateThreeDayForecast() {
+		List<WeatherReportDTO> reports = new ArrayList<>();
+		DateDTO last = getToday().getDt();
+
+		float average_temp = 0;
+		float average_humidity = 0;
+		float average_pressure = 0;
+		int count = 0;
+		boolean skip = true;
+		int i = 0;
+
+		while (reports.size() < 3) {
+			WeatherReportDTO report = list.get(i);
+			DateDTO cur = report.getDt();
+
+			if (!cur.getDate().toString().equals(last.getDate().toString())) {
+				if (!skip) {
+					average_temp /= count;
+					average_humidity /= count;
+					average_pressure /= count;
+
+					reports.add(WeatherReportDTO.builder()
+							.dt(last)
+							.main(ClimateDTO.builder()
+									.humidity(average_humidity)
+									.pressure(average_pressure)
+									.temp(average_temp)
+									.build())
+							.build());
+				} else {
+					skip = false;
+					count += 1;
+					average_temp += report.getMain().getTemp();
+					average_humidity += report.getMain().getHumidity();
+					average_pressure += report.getMain().getPressure();
+				}
+			}
+
+			last = cur;
+			i++;
+		}
+
 		return reports;
 	}
 }
