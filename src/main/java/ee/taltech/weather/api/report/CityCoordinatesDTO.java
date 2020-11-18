@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.text.DecimalFormat;
 
 @Getter
 @Builder
@@ -23,6 +24,7 @@ public class CityCoordinatesDTO {
 	private float lon;
 
 	public String formatted() {
-		return null;
+		DecimalFormat f = new DecimalFormat("##.00");
+		return f.format(lat) + "," + f.format(lon);
 	}
 }
