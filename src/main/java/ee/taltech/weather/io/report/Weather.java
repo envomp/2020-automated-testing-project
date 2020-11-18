@@ -1,5 +1,6 @@
 package ee.taltech.weather.io.report;
 
+import ee.taltech.weather.api.report.WeatherReportDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,4 +23,12 @@ public class Weather {
 	@Min(0)
 	@Max(10000)
 	private int pressure;
+
+	public static Weather from(WeatherReportDTO dto) {
+		return Weather.builder()
+				.temperature(Math.round(dto.getMain().getTemp()))
+				.humidity(Math.round(dto.getMain().getHumidity()))
+				.pressure(Math.round(dto.getMain().getPressure()))
+				.build();
+	}
 }
