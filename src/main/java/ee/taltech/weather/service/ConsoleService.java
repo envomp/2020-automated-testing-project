@@ -53,11 +53,12 @@ public class ConsoleService {
 		}
 
 		try {
+			String json = weatherReportService.fetchReport(name);
 			FileWriter myWriter = new FileWriter(outputPath);
-			myWriter.write(weatherReportService.fetchReport(name));
+			myWriter.write(json);
 			myWriter.close();
 		} catch (IOException e) {
-			logger.error("Failed writing to output stream with message: {}", e.getLocalizedMessage());
+			logger.error("Failed processing city: {} with error: {}", name, e.getLocalizedMessage());
 		}
 	}
 }
