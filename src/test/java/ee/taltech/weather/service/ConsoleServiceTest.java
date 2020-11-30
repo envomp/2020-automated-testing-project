@@ -13,27 +13,22 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { TestWeatherApplication.class })
+@ContextConfiguration(classes = {TestWeatherApplication.class})
 class ConsoleServiceTest {
 
 	@MockBean
@@ -50,7 +45,6 @@ class ConsoleServiceTest {
 	private ObjectMapper objectMapper;
 
 	private final String EXPECTED_CITY_NAME = "Munich";
-	private final String BAD_NAME_ERROR_MESSAGE = "Bad name";
 
 
 	@BeforeEach
@@ -60,7 +54,7 @@ class ConsoleServiceTest {
 				.thenReturn(WeatherReportFactory.getThreeHourIntervalWeatherReportDTO());
 
 		when(apiRequestService.fetchWeatherReportDTO("x"))
-				.thenThrow(new IOException(BAD_NAME_ERROR_MESSAGE));
+				.thenThrow(new IOException("Bad name"));
 	}
 
 	@AfterEach
@@ -106,6 +100,6 @@ class ConsoleServiceTest {
 		consoleService.parseInput();
 
 		String output = WeatherReportFactory.getBadWeatherReportOutputLocation();
-		assertEquals(BAD_NAME_ERROR_MESSAGE, Files.readString(new File(output).toPath()));
+		assertFalse(new File(output).exists());
 	}
 }
