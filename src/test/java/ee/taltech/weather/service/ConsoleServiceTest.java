@@ -50,10 +50,13 @@ class ConsoleServiceTest {
 	@BeforeEach
 	@SneakyThrows
 	void setUp() {
-		when(apiRequestService.fetchWeatherReportDTO(anyString()))
+		when(apiRequestService.fetchForecastReportDTO(anyString()))
 				.thenReturn(WeatherReportFactory.getThreeHourIntervalWeatherReportDTO());
 
-		when(apiRequestService.fetchWeatherReportDTO("x"))
+		when(apiRequestService.fetchCurrentWeatherReportDTO(anyString()))
+				.thenReturn(WeatherReportFactory.getWeatherReportDTO());
+
+		when(apiRequestService.fetchForecastReportDTO("x"))
 				.thenThrow(new IOException("Bad name"));
 	}
 

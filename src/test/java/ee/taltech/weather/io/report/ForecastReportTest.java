@@ -13,7 +13,10 @@ import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ForecastReportTest {
 
@@ -31,17 +34,13 @@ class ForecastReportTest {
 
 	@Test
 	@SneakyThrows
-	void getThreeDayForecastIsThrowsExeptionWhenDatesAreWrong() {
-		try {
-			ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-			InputStream stream = classloader.getResourceAsStream("sample_insufficient_response.json");
-			ObjectMapper mapper = new ObjectMapper();
-			ThreeHourIntervalWeatherReportDTO dto = mapper.readValue(stream, ThreeHourIntervalWeatherReportDTO.class);
-			WeatherReport.fromWeatherReportDTO(dto);
-		} catch (InvalidStructureException ignored) {
-		} catch (Exception e) {
-			fail();
-		}
+	void getThreeDayForecastIsThrowsExceptionWhenDatesAreWrong() {
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+		InputStream stream = classloader.getResourceAsStream("sample_insufficient_response.json");
+		ObjectMapper mapper = new ObjectMapper();
+		ThreeHourIntervalWeatherReportDTO dto = mapper.readValue(stream, ThreeHourIntervalWeatherReportDTO.class);
+		Throwable thrown = catchThrowable(() -> WeatherReport.fromWeatherReportDTO(dto));
+		assertThat(thrown).isInstanceOf(InvalidStructureException.class);
 	}
 
 	@Test
