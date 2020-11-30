@@ -10,6 +10,8 @@ import lombok.SneakyThrows;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.InputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class WeatherReportFactory {
 	public static WeatherReportDTO getWeatherReportDTO() {
@@ -24,6 +26,14 @@ public class WeatherReportFactory {
 	}
 
 	@SneakyThrows
+	public static ThreeHourIntervalWeatherReportDTO getThreeHourIntervalWeatherReportDTO() {
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+		InputStream stream = classloader.getResourceAsStream("sample_passed_response.json");
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.readValue(stream, ThreeHourIntervalWeatherReportDTO.class);
+	}
+
+	@SneakyThrows
 	public static WeatherReport getWeatherReport() {
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 		InputStream stream = classloader.getResourceAsStream("sample_passed_response.json");
@@ -33,23 +43,39 @@ public class WeatherReportFactory {
 	}
 
 	@SneakyThrows
-	public static String getWeatherReportLocation() {
-		ClassPathResource resource = new ClassPathResource("sample_passed_response.json");
-		return resource.getPath();
+	public static String getWeatherReportInputLocation() {
+		ClassPathResource resource = new ClassPathResource("sample_passed_inputs.txt");
+		return resource.getFile().getAbsolutePath();
 	}
 
 	@SneakyThrows
-	public static WeatherReport getFailedWeatherReport() {
+	public static List<String> getWeatherReportOutputLocation() {
+		ClassPathResource resource = new ClassPathResource("sample_passed_inputs.txt");
+		String path = resource.getFile().getAbsolutePath();
+		return List.of("Tallinn", "Tartu", "Pärnu", "Jõgeva")
+				.stream().map(x -> path.replace("sample_passed_inputs.txt", x + ".json"))
+				.collect(Collectors.toList());
+	}
+
+	@SneakyThrows
+	public static WeatherReport getBadWeatherReport() {
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-		InputStream stream = classloader.getResourceAsStream("sample_failed_response.json");
+		InputStream stream = classloader.getResourceAsStream("sample_bad_response.json");
 		ObjectMapper mapper = new ObjectMapper();
 		ThreeHourIntervalWeatherReportDTO dto = mapper.readValue(stream, ThreeHourIntervalWeatherReportDTO.class);
 		return WeatherReport.fromWeatherReportDTO(dto);
 	}
 
 	@SneakyThrows
-	public static String getFailedWeatherReportLocation() {
-		ClassPathResource resource = new ClassPathResource("sample_failed_response.json");
-		return resource.getPath();
+	public static String getBadWeatherReportInputLocation() {
+		ClassPathResource resource = new ClassPathResource("sample_bad_inputs.txt");
+		return resource.getFile().getAbsolutePath();
+	}
+
+	@SneakyThrows
+	public static String getBadWeatherReportOutputLocation() {
+		ClassPathResource resource = new ClassPathResource("sample_bad_inputs.txt");
+		String path = resource.getFile().getAbsolutePath();
+		return path.replace("sample_bad_inputs.txt", "x" + ".json");
 	}
 }
