@@ -71,6 +71,13 @@ class ConsoleServiceTest {
 	}
 
 	@Test
+	void failsOnMissingInput() {
+		properties.setInputPath(WeatherReportFactory.getMissingWeatherReportInputLocation());
+		Throwable thrown = catchThrowable(() -> consoleService.parseInput());
+		assertThat(thrown).isInstanceOf(InvalidInputException.class);
+	}
+
+	@Test
 	void readsInputAndWritesToOutputs() {
 		properties.setInputPath(WeatherReportFactory.getWeatherReportInputLocation());
 		consoleService.parseInput();

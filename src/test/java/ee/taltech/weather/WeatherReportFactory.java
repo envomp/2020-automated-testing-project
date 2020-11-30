@@ -49,6 +49,12 @@ public class WeatherReportFactory {
 	}
 
 	@SneakyThrows
+	public static String getMissingWeatherReportInputLocation() {
+		ClassPathResource resource = new ClassPathResource("sample_passed_inputs.txt");
+		return resource.getFile().getAbsolutePath().replace("sample_passed_inputs", "missing_input");
+	}
+
+	@SneakyThrows
 	public static List<String> getWeatherReportOutputLocation() {
 		ClassPathResource resource = new ClassPathResource("sample_passed_inputs.txt");
 		String path = resource.getFile().getAbsolutePath();
