@@ -25,7 +25,7 @@ public class ConsoleService {
 	@SneakyThrows
 	public void parseInput() {
 		if (!properties.getInputPath().endsWith(".txt")) {
-			String message = "Invalid input format! Please use comma or space separated .txt file instead";
+			String message = "Invalid input format: " + properties.getInputPath() + "! Please use comma or space separated .txt file instead";
 			logger.error(message);
 			throw new InvalidInputException(message);
 		}

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Setter
 public class Properties {
 	private String token = "token";
-	private String inputPath = "./input.txt";
+	private String inputPath = "/app/files/input.txt";
 
 	@Bean
 	@Scope("prototype")

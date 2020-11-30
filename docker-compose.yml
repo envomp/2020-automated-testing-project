@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+
+    weather_app:
+        container_name: weather_app
+        image: weather_app:latest
+        restart: "no"
+        env_file:
+            - ".env"
+        build:
+            context: .
+        volumes:
+            - ./files/:/app/files

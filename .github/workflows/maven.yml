@@ -16,9 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 11
+    - name: Weather app tests
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Run tests
-      run: mvn test
+    - name: Run API tests
+      run: mvnw '-Dtest=ee.taltech.weather.api.*Test' test
+    - name: Run IO tests
+      run: mvnw '-Dtest=ee.taltech.weather.io.*Test' test
+    - name: Run integration tests
+      run: mvnw '-Dtest=ee.taltech.weather.service.*Test' test
