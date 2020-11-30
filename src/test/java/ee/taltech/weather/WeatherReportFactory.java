@@ -64,15 +64,6 @@ public class WeatherReportFactory {
 	}
 
 	@SneakyThrows
-	public static WeatherReport getBadWeatherReport() {
-		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-		InputStream stream = classloader.getResourceAsStream("sample_bad_response.json");
-		ObjectMapper mapper = new ObjectMapper();
-		ThreeHourIntervalWeatherReportDTO dto = mapper.readValue(stream, ThreeHourIntervalWeatherReportDTO.class);
-		return WeatherReport.fromWeatherReportDTO(dto);
-	}
-
-	@SneakyThrows
 	public static String getBadWeatherReportInputLocation() {
 		ClassPathResource resource = new ClassPathResource("sample_bad_inputs.txt");
 		return resource.getFile().getAbsolutePath();
