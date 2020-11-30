@@ -1,4 +1,4 @@
-package ee.taltech.weather.components;
+package ee.taltech.weather.model;
 
 import lombok.Getter;
 

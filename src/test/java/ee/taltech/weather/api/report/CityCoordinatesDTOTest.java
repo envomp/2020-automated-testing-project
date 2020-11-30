@@ -1,6 +1,6 @@
 package ee.taltech.weather.api.report;
 
-import ee.taltech.weather.components.CityCoordinates;
+import ee.taltech.weather.model.CityCoordinates;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
