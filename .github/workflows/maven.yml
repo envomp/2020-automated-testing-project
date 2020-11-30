@@ -21,8 +21,8 @@ jobs:
       with:
         java-version: 11
     - name: Run API tests
-      run: mvnw '-Dtest=ee.taltech.weather.api.*Test' test
+      run: mvn '-Dtest=ee.taltech.weather.api.*Test' test
     - name: Run IO tests
-      run: mvnw '-Dtest=ee.taltech.weather.io.*Test' test
+      run: mvn '-Dtest=ee.taltech.weather.io.*Test' test
     - name: Run integration tests
-      run: mvnw '-Dtest=ee.taltech.weather.service.*Test' test
+      run: mvn '-Dtest=ee.taltech.weather.service.*Test' test
