@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -57,7 +56,8 @@ public class ConsoleService {
 			FileWriter myWriter = new FileWriter(outputPath);
 			myWriter.write(json);
 			myWriter.close();
-		} catch (IOException e) {
+			logger.info("Processed {} and wrote the result to {}", name, outputPath);
+		} catch (Exception e) {
 			logger.error("Failed processing city: {} with error: {}", name, e.getLocalizedMessage());
 		}
 	}
