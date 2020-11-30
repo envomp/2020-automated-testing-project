@@ -1,4 +1,4 @@
-package ee.taltech.weather.api.report;
+package ee.taltech.weather.model.report.api;
 
 public class InvalidStructureException extends RuntimeException {
 	public InvalidStructureException(String message) {

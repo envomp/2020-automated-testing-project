@@ -1,6 +1,6 @@
-package ee.taltech.weather.io.report;
+package ee.taltech.weather.model.report.io;
 
-import ee.taltech.weather.api.report.WeatherReportDTO;
+import ee.taltech.weather.model.report.api.WeatherReportDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +13,8 @@ import javax.validation.constraints.Min;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Weather {
+public class CurrentWeatherReport {
+	private String date;
 	@Min(-274)
 	@Max(274)
 	private int temperature;
@@ -24,8 +25,9 @@ public class Weather {
 	@Max(10000)
 	private int pressure;
 
-	public static Weather from(WeatherReportDTO dto) {
-		return Weather.builder()
+	public static CurrentWeatherReport from(WeatherReportDTO dto) {
+		return CurrentWeatherReport.builder()
+				.date(dto.getDt().getDate().toLocalDate().toString())
 				.temperature(Math.round(dto.getMain().getTemp()))
 				.humidity(Math.round(dto.getMain().getHumidity()))
 				.pressure(Math.round(dto.getMain().getPressure()))

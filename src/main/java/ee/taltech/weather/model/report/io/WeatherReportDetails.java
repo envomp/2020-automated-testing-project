@@ -1,6 +1,6 @@
-package ee.taltech.weather.io.report;
+package ee.taltech.weather.model.report.io;
 
-import ee.taltech.weather.api.report.ThreeHourIntervalWeatherReportDTO;
+import ee.taltech.weather.model.report.api.ThreeHourIntervalWeatherReportDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

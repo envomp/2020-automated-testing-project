@@ -1,7 +1,9 @@
 package ee.taltech.weather.io.report;
 
-import ee.taltech.weather.api.report.WeatherReportDTO;
 import ee.taltech.weather.WeatherReportFactory;
+import ee.taltech.weather.model.report.api.WeatherReportDTO;
+import ee.taltech.weather.model.report.io.CurrentWeatherReport;
+import ee.taltech.weather.model.report.io.WeatherReport;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 

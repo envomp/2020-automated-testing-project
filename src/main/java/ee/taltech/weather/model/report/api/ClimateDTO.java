@@ -1,7 +1,6 @@
-package ee.taltech.weather.api.report;
+package ee.taltech.weather.model.report.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import ee.taltech.weather.components.CityCoordinates;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CityDTO {
-	private String name;
-	private CityCoordinates coord;
+public class ClimateDTO {
+	private float temp;
+	private float humidity;
+	private float pressure;
 }

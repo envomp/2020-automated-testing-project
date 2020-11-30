@@ -1,7 +1,7 @@
-package ee.taltech.weather.api.report;
+package ee.taltech.weather.model.report.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import ee.taltech.weather.components.DateDTO;
+import ee.taltech.weather.model.DateDTO;
 import lombok.*;
 
 import javax.validation.constraints.Size;
