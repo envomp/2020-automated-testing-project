@@ -1,12 +1,13 @@
 package ee.taltech.weather;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ee.taltech.weather.api.report.ClimateDTO;
-import ee.taltech.weather.api.report.ThreeHourIntervalWeatherReportDTO;
-import ee.taltech.weather.api.report.WeatherReportDTO;
-import ee.taltech.weather.components.DateDTO;
-import ee.taltech.weather.io.report.WeatherReport;
+import ee.taltech.weather.model.DateDTO;
+import ee.taltech.weather.model.report.api.ClimateDTO;
+import ee.taltech.weather.model.report.api.ThreeHourIntervalWeatherReportDTO;
+import ee.taltech.weather.model.report.api.WeatherReportDTO;
+import ee.taltech.weather.model.report.io.WeatherReport;
 import lombok.SneakyThrows;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.InputStream;
 
@@ -29,5 +30,26 @@ public class WeatherReportFactory {
 		ObjectMapper mapper = new ObjectMapper();
 		ThreeHourIntervalWeatherReportDTO dto = mapper.readValue(stream, ThreeHourIntervalWeatherReportDTO.class);
 		return WeatherReport.fromWeatherReportDTO(dto);
+	}
+
+	@SneakyThrows
+	public static String getWeatherReportLocation() {
+		ClassPathResource resource = new ClassPathResource("sample_passed_response.json");
+		return resource.getPath();
+	}
+
+	@SneakyThrows
+	public static WeatherReport getFailedWeatherReport() {
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+		InputStream stream = classloader.getResourceAsStream("sample_failed_response.json");
+		ObjectMapper mapper = new ObjectMapper();
+		ThreeHourIntervalWeatherReportDTO dto = mapper.readValue(stream, ThreeHourIntervalWeatherReportDTO.class);
+		return WeatherReport.fromWeatherReportDTO(dto);
+	}
+
+	@SneakyThrows
+	public static String getFailedWeatherReportLocation() {
+		ClassPathResource resource = new ClassPathResource("sample_failed_response.json");
+		return resource.getPath();
 	}
 }
