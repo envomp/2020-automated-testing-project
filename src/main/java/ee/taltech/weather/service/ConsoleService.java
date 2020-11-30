@@ -1,6 +1,7 @@
 package ee.taltech.weather.service;
 
 import ee.taltech.weather.configuration.Properties;
+import ee.taltech.weather.exceptions.InvalidInputException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
@@ -23,6 +24,12 @@ public class ConsoleService {
 
 	@SneakyThrows
 	public void parseInput() {
+		if (!properties.getInputPath().endsWith(".txt")) {
+			String message = "Invalid input format! Please use comma or space separated .txt file instead";
+			logger.error(message);
+			throw new InvalidInputException(message);
+		}
+
 		Path path = new File(properties.getInputPath()).toPath();
 		if (path.toFile().isFile()) {
 			String[] cityNames = new String(Files.readAllBytes(path)).split("[\\s,]+");
@@ -33,7 +40,9 @@ public class ConsoleService {
 				}
 			});
 		} else {
-			logger.error("No such directory: {}", path.toAbsolutePath().toString());
+			String error = "No such directory: " + path.toAbsolutePath().toString();
+			logger.error(error);
+			throw new InvalidInputException(error);
 		}
 
 	}

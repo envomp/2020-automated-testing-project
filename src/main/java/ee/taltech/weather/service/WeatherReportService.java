@@ -29,6 +29,7 @@ public class WeatherReportService {
 				return dto.getMessage().toString();
 			}
 		} catch (Exception e) {
+			logger.error("API request failed with message: {}", e.getMessage());
 			return e.getMessage();
 		}
 	}
