@@ -31,21 +31,16 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = {TestWeatherApplication.class})
 class ConsoleServiceTest {
 
+	private final String EXPECTED_CITY_NAME = "Munich";
 	@MockBean
 	private ApiRequestService apiRequestService;
-
 	@Autowired
 	@InjectMocks
 	private ConsoleService consoleService;
-
 	@Autowired
 	private Properties properties;
-
 	@Autowired
 	private ObjectMapper objectMapper;
-
-	private final String EXPECTED_CITY_NAME = "Munich";
-
 
 	@BeforeEach
 	@SneakyThrows

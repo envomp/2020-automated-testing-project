@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WeatherReportDetails {
-	private String city;
-	private String coordinates;
 	@Builder.Default
 	private final String temperatureUnit = "Celsius";
+	private String city;
+	private String coordinates;
 
 	public static WeatherReportDetails from(ThreeHourIntervalWeatherReportDTO dto) {
 		return WeatherReportDetails.builder()

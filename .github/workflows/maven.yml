@@ -4,25 +4,25 @@
 name: Java CI with Maven
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
 
 jobs:
-  build:
+    build:
 
-    runs-on: ubuntu-latest
+        runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Weather app tests
-      uses: actions/setup-java@v1
-      with:
-        java-version: 11
-    - name: Run API tests
-      run: mvn '-Dtest=ee.taltech.weather.api.report.*Test.java' test
-    - name: Run IO tests
-      run: mvn '-Dtest=ee.taltech.weather.io.report.*Test' test
-    - name: Run integration tests
-      run: mvn '-Dtest=ee.taltech.weather.service.*Test' test
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Weather app tests
+                uses: actions/setup-java@v1
+                with:
+                    java-version: 11
+            -   name: Run API tests
+                run: mvn '-Dtest=ee.taltech.weather.api.report.*Test.java' test
+            -   name: Run IO tests
+                run: mvn '-Dtest=ee.taltech.weather.io.report.*Test' test
+            -   name: Run integration tests
+                run: mvn '-Dtest=ee.taltech.weather.service.*Test' test
