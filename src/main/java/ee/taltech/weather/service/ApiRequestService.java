@@ -6,6 +6,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import ee.taltech.weather.model.report.api.ThreeHourIntervalWeatherReportDTO;
 import ee.taltech.weather.configuration.Properties;
+import ee.taltech.weather.model.report.api.WeatherReportDTO;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
@@ -27,14 +28,28 @@ public class ApiRequestService {
 		return "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=metric&appid=" + token;
 	}
 
-	public ThreeHourIntervalWeatherReportDTO fetchWeatherReportDTO(String cityName) throws IOException {
+	public ThreeHourIntervalWeatherReportDTO fetchForecastReportDTO(String cityName) throws IOException {
 		Request request = new Request.Builder()
 				.url(getForecastUrl(cityName, properties.getToken()))
 				.build();
 
-		logger.debug("Making a request for city: {}", cityName);
+		logger.debug("Making a forecast request for city: {}", cityName);
 		Response response = client.newCall(request).execute();
 		return mapper.readValue(response.body().byteStream(), ThreeHourIntervalWeatherReportDTO.class);
+	}
+
+	private static String getCurrentWeatherUrl(String cityName, String token) {
+		return "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=metric&appid=" + token;
+	}
+
+	public WeatherReportDTO fetchCurrentWeatherReportDTO(String cityName) throws IOException {
+		Request request = new Request.Builder()
+				.url(getCurrentWeatherUrl(cityName, properties.getToken()))
+				.build();
+
+		logger.debug("Making a current request for city: {}", cityName);
+		Response response = client.newCall(request).execute();
+		return mapper.readValue(response.body().byteStream(), WeatherReportDTO.class);
 	}
 
 }
