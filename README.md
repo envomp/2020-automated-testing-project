@@ -14,15 +14,17 @@
 
 Prerequisites:
 - docker-compose
-- OWM API key
 
 Make sure you have `files` directory with `input.txt` inside of it present on the same level as the `docker-compose.yml` file
 
-Then rename `..env` file to `.env` file and put your OWM API key inside of it
+Or rename `..env` file to `.env` file and put your desired path in there
 
 And finally run `docker-compose run weather_app`
 
 ## Locally
+
+Prerequisites:
+- Java
 
 First create jar
 
@@ -35,9 +37,9 @@ else
 ./mvnw package
 ```
 
-Either create an input file to `/app/input.txt` and run `java -jar target/weather-1.0.0.jar --weather.report.token=<YOUR_TOKEN_HERE>`
+Either create an input file to `/app/input.txt` and run `java -jar target/weather-1.0.0.jar`
 
-Or choose a custom location like `./files/input.txt` and run `java -jar target/weather-1.0.0.jar --weather.report.inputPath=files/input.txt --weather.report.token=<YOUR_TOKEN_HERE>`
+Or choose a custom location like `./files/input.txt` and run `java -jar target/weather-1.0.0.jar --weather.report.inputPath=files/input.txt`
 
 both variables can be set as environment variables (OPEN_WEATHER_MAP_API_KEY and WEATHER_APP_INPUT respectively) as well
 
@@ -84,7 +86,3 @@ If any tests fail locally when running on local machine or when jar doesn't proc
 - [X] CI pipeline fails if any test fails
 - [X] CI pipeline passes when all tests have passed 
 - [X] CI pipeline produces a log (why did it fail?)
-
-# Theory
-
-WIP
