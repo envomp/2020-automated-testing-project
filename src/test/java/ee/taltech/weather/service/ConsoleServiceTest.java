@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +31,6 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = {TestWeatherApplication.class})
 class ConsoleServiceTest {
 
-	private final String EXPECTED_CITY_NAME = "Munich";
 	@MockBean
 	private ApiRequestService apiRequestService;
 	@Autowired
@@ -76,35 +75,16 @@ class ConsoleServiceTest {
 	}
 
 	@Test
-	void readsInputAndWritesToOutputs() {
-		properties.setInputPath(WeatherReportFactory.getWeatherReportInputLocation());
-		consoleService.parseInput();
-
-		WeatherReportFactory.getWeatherReportOutputLocation().forEach(output -> {
-			assertTrue(new File(output).isFile());
-			assertTrue(new File(output).delete());
-		});
-	}
-
-	@Test
 	@SneakyThrows
-	void parsesInputAndWritesToOutputs() {
-		properties.setInputPath(WeatherReportFactory.getWeatherReportInputLocation());
+	void readsInputAndWritesCurrentWeatherReport() {
+		properties.setInputPath(WeatherReportFactory.getSampleWeatherReportInputLocation());
 		consoleService.parseInput();
 
-		for (String output : WeatherReportFactory.getWeatherReportOutputLocation()) {
-			WeatherReport report = objectMapper.readValue(new File(output), WeatherReport.class);
-			assertEquals(EXPECTED_CITY_NAME, report.getWeatherReportDetails().getCity());
-		}
-	}
+		String output = WeatherReportFactory.getSampleWeatherReportOutputLocation();
 
-	@Test
-	@SneakyThrows
-	void parsesBadInputAndWritesErrorToOutputs() {
-		properties.setInputPath(WeatherReportFactory.getBadWeatherReportInputLocation());
-		consoleService.parseInput();
-
-		String output = WeatherReportFactory.getBadWeatherReportOutputLocation();
-		assertFalse(new File(output).exists());
+		WeatherReport report = objectMapper.readValue(new File(output), WeatherReport.class);
+		assertEquals("Munich", report.getWeatherReportDetails().getCity());
+		assertEquals("48.14,11.58", report.getWeatherReportDetails().getCoordinates());
+		assertEquals("Celsius", report.getWeatherReportDetails().getTemperatureUnit());
 	}
 }

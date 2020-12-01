@@ -43,6 +43,19 @@ public class WeatherReportFactory {
 	}
 
 	@SneakyThrows
+	public static String getSampleWeatherReportInputLocation() {
+		ClassPathResource resource = new ClassPathResource("sample_input.txt");
+		return resource.getFile().getAbsolutePath();
+	}
+
+	@SneakyThrows
+	public static String getSampleWeatherReportOutputLocation() {
+		ClassPathResource resource = new ClassPathResource("sample_input.txt");
+		String path = resource.getFile().getAbsolutePath();
+		return path.replace("sample_input.txt", "Munich" + ".json");
+	}
+
+	@SneakyThrows
 	public static String getWeatherReportInputLocation() {
 		ClassPathResource resource = new ClassPathResource("sample_passed_inputs.txt");
 		return resource.getFile().getAbsolutePath();
