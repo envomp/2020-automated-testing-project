@@ -26,10 +26,17 @@ class ForecastReportTest {
 		WeatherReport report = WeatherReportFactory.getWeatherReport();
 
 		assertEquals(3, report.getForecastReport().size());
-		assertEquals("2020-11-18", report.getForecastReport().get(0).getDate());
-		assertEquals(84, report.getForecastReport().get(0).getWeather().getHumidity());
-		assertEquals(1030, report.getForecastReport().get(0).getWeather().getPressure());
-		assertEquals(278, report.getForecastReport().get(0).getWeather().getTemperature());
+
+		assertEquals("2020-12-02", report.getForecastReport().get(0).getDate());
+		assertEquals("2020-12-03", report.getForecastReport().get(1).getDate());
+		assertEquals("2020-12-04", report.getForecastReport().get(2).getDate());
+
+		for (int i = 0; i < 3; i++) {
+			int step = (int) Math.pow(10, i);
+			assertEquals(45 * step, report.getForecastReport().get(i).getWeather().getHumidity());
+			assertEquals(45 * step, report.getForecastReport().get(i).getWeather().getPressure());
+			assertEquals(45 * step, report.getForecastReport().get(i).getWeather().getTemperature());
+		}
 	}
 
 	@Test

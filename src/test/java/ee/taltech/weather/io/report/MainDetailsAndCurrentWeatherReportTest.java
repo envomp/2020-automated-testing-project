@@ -22,15 +22,15 @@ class MainDetailsAndCurrentWeatherReportTest {
 	}
 
 	@Test
-	void from() {
+	void reportIsRoundedProperty() {
 		WeatherReportDTO dto = WeatherReportFactory.getWeatherReportDTO();
 
 		CurrentWeatherReport report = CurrentWeatherReport.from(dto);
 
+		assertEquals("2020-12-01", report.getDate());
 		assertEquals(-5, report.getTemperature());
 		assertEquals(75, report.getHumidity());
 		assertEquals(985, report.getPressure());
-		assertEquals("2019-10-01", report.getDate());
 	}
 
 	@Test
@@ -38,9 +38,9 @@ class MainDetailsAndCurrentWeatherReportTest {
 	void fromWeatherReportDtoCurrentReport() {
 		WeatherReport report = WeatherReportFactory.getWeatherReport();
 
-		assertEquals("2020-11-17", report.getCurrentWeatherReport().getDate());
-		assertEquals(87, report.getCurrentWeatherReport().getHumidity());
-		assertEquals(1029, report.getCurrentWeatherReport().getPressure());
-		assertEquals(278, report.getCurrentWeatherReport().getTemperature());
+		assertEquals("2020-12-01", report.getCurrentWeatherReport().getDate());
+		assertEquals(90, report.getCurrentWeatherReport().getHumidity());
+		assertEquals(1015, report.getCurrentWeatherReport().getPressure());
+		assertEquals(275, report.getCurrentWeatherReport().getTemperature());
 	}
 }
