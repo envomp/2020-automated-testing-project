@@ -76,7 +76,7 @@ class ConsoleServiceTest {
 
 	@Test
 	@SneakyThrows
-	void readsInputAndWritesCurrentWeatherReport() {
+	void readsInputAndWritesWeatherReportMainDetails() {
 		properties.setInputPath(WeatherReportFactory.getSampleWeatherReportInputLocation());
 		consoleService.parseInput();
 
@@ -86,5 +86,43 @@ class ConsoleServiceTest {
 		assertEquals("Munich", report.getWeatherReportDetails().getCity());
 		assertEquals("48.14,11.58", report.getWeatherReportDetails().getCoordinates());
 		assertEquals("Celsius", report.getWeatherReportDetails().getTemperatureUnit());
+	}
+
+	@Test
+	@SneakyThrows
+	void readsInputAndWritesCurrentWeatherReport() {
+		properties.setInputPath(WeatherReportFactory.getSampleWeatherReportInputLocation());
+		consoleService.parseInput();
+
+		String output = WeatherReportFactory.getSampleWeatherReportOutputLocation();
+
+		WeatherReport report = objectMapper.readValue(new File(output), WeatherReport.class);
+		assertEquals("2020-12-01", report.getCurrentWeatherReport().getDate());
+		assertEquals(75, report.getCurrentWeatherReport().getHumidity());
+		assertEquals(985, report.getCurrentWeatherReport().getPressure());
+		assertEquals(-5, report.getCurrentWeatherReport().getTemperature());
+	}
+
+	@Test
+	@SneakyThrows
+	void readsInputAndWritesForecastReport() {
+		properties.setInputPath(WeatherReportFactory.getSampleWeatherReportInputLocation());
+		consoleService.parseInput();
+
+		String output = WeatherReportFactory.getSampleWeatherReportOutputLocation();
+
+		WeatherReport report = objectMapper.readValue(new File(output), WeatherReport.class);
+		assertEquals(3, report.getForecastReport().size());
+
+		assertEquals("2020-12-02", report.getForecastReport().get(0).getDate());
+		assertEquals("2020-12-03", report.getForecastReport().get(1).getDate());
+		assertEquals("2020-12-04", report.getForecastReport().get(2).getDate());
+
+		for (int i = 0; i < 3; i++) {
+			int step = (int) Math.pow(10, i);
+			assertEquals(45 * step, report.getForecastReport().get(i).getWeather().getHumidity());
+			assertEquals(45 * step, report.getForecastReport().get(i).getWeather().getPressure());
+			assertEquals(45 * step, report.getForecastReport().get(i).getWeather().getTemperature());
+		}
 	}
 }

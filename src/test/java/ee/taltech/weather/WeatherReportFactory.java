@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class WeatherReportFactory {
 	public static WeatherReportDTO getWeatherReportDTO() {
 		return WeatherReportDTO.builder()
-				.dt(new DateDTO(1569931200L))
+				.dt(new DateDTO(1606823335L))
 				.main(ClimateDTO.builder()
 						.humidity(74.5f)
 						.pressure(984.6f)

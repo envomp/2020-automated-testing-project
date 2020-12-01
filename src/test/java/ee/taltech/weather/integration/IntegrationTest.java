@@ -1,6 +1,8 @@
-package ee.taltech.weather;
+package ee.taltech.weather.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ee.taltech.weather.TestWeatherApplication;
+import ee.taltech.weather.WeatherReportFactory;
 import ee.taltech.weather.configuration.Properties;
 import ee.taltech.weather.model.report.io.WeatherReport;
 import ee.taltech.weather.service.ConsoleService;
@@ -13,6 +15,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,7 +45,7 @@ public class IntegrationTest {
 
 	@Test
 	@SneakyThrows
-	void parsesInputAndWritesWeatherReportDetails() {
+	void parsesInputAndWritesWeatherReportMainDetails() {
 		properties.setInputPath(WeatherReportFactory.getWeatherReportInputLocation());
 		consoleService.parseInput();
 
@@ -49,6 +57,43 @@ public class IntegrationTest {
 			assertEquals(List.of("59.44,24.75", "58.38,26.73", "58.39,24.50", "58.75,26.39").get(i), report.getWeatherReportDetails().getCoordinates());
 			assertEquals("Celsius", report.getWeatherReportDetails().getTemperatureUnit());
 		}
+	}
+
+	@Test
+	@SneakyThrows
+	void parsesInputAndWritesCurrentWeatherReport() {
+		properties.setInputPath(WeatherReportFactory.getWeatherReportInputLocation());
+		consoleService.parseInput();
+
+		List<String> weatherReportOutputLocation = WeatherReportFactory.getWeatherReportOutputLocation();
+		for (String output : weatherReportOutputLocation) {
+			WeatherReport report = objectMapper.readValue(new File(output), WeatherReport.class);
+			assertEquals(report.getCurrentWeatherReport().getDate(), getDaysFromNow(0));
+		}
+	}
+
+	@Test
+	@SneakyThrows
+	void parsesInputAndWritesForecastReport() {
+		properties.setInputPath(WeatherReportFactory.getWeatherReportInputLocation());
+		consoleService.parseInput();
+
+		List<String> weatherReportOutputLocation = WeatherReportFactory.getWeatherReportOutputLocation();
+		for (int i = 0; i < weatherReportOutputLocation.size(); i++) {
+			String output = weatherReportOutputLocation.get(i);
+			WeatherReport report = objectMapper.readValue(new File(output), WeatherReport.class);
+			for (int day = 0; day < 3; day++) {
+				assertEquals(report.getForecastReport().get(day).getDate(), getDaysFromNow(day + 1));
+			}
+		}
+	}
+
+	private String getDaysFromNow(int days) {
+		Date today = Calendar.getInstance().getTime();
+		LocalDateTime newDay = today.toInstant().plus(days, ChronoUnit.DAYS)
+				.atOffset(ZoneOffset.ofHours(2)).toLocalDateTime();
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE;
+		return newDay.format(dateTimeFormatter);
 	}
 
 	@Test
