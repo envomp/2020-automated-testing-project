@@ -35,46 +35,49 @@ public class ThreeHourIntervalWeatherReportDTO {
 	@SneakyThrows
 	private List<WeatherReportDTO> generateThreeDayForecast() {
 		List<WeatherReportDTO> reports = new ArrayList<>();
-		DateDTO last = getToday().getDt();
+		DateDTO today = getToday().getDt();
 
-		float average_temp = 0;
-		float average_humidity = 0;
-		float average_pressure = 0;
-		int count = 0;
-		boolean skip = true;
-		int i = 0;
+		int position = 0;
 
-		while (reports.size() < 3) {
-			WeatherReportDTO report = list.get(i);
-			DateDTO cur = report.getDt();
-
-			if (!cur.getDate().toString().equals(last.getDate().toString())) {
-				if (!skip) {
-					average_temp /= count;
-					average_humidity /= count;
-					average_pressure /= count;
-
-					reports.add(WeatherReportDTO.builder()
-							.dt(last)
-							.main(ClimateDTO.builder()
-									.humidity(average_humidity)
-									.pressure(average_pressure)
-									.temp(average_temp)
-									.build())
-							.build());
-				} else {
-					skip = false;
-					count += 1;
-					average_temp += report.getMain().getTemp();
-					average_humidity += report.getMain().getHumidity();
-					average_pressure += report.getMain().getPressure();
+		for (int i = 0; i < 3; i++) {
+			for (int pointer = position; pointer < list.size(); pointer++) {
+				DateDTO newDay = list.get(pointer).getDt();
+				if (!newDay.getFormattedDate().equals(today.getFormattedDate())) {
+					position = pointer;
+					WeatherReportDTO newReport = generateDaysReport(position);
+					reports.add(newReport);
+					today = newReport.getDt();
+					break;
 				}
 			}
-
-			last = cur;
-			i++;
 		}
 
 		return reports;
+	}
+
+	private WeatherReportDTO generateDaysReport(Integer pointer) {
+		float totalTemp = 0f;
+		float totalHumidity = 0f;
+		float totalPressure = 0f;
+		int count = 0;
+		DateDTO today = list.get(pointer).getDt();
+
+		while (list.get(pointer).getDt().getFormattedDate().equals(today.getFormattedDate())) {
+			ClimateDTO dto = list.get(pointer).getMain();
+			totalTemp += dto.getTemp();
+			totalHumidity += dto.getHumidity();
+			totalPressure += dto.getPressure();
+			count += 1;
+			pointer += 1;
+		}
+
+		return WeatherReportDTO.builder()
+				.dt(today)
+				.main(ClimateDTO.builder()
+						.humidity(totalHumidity / count)
+						.pressure(totalPressure / count)
+						.temp(totalTemp / count)
+						.build())
+				.build();
 	}
 }
