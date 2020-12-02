@@ -2,7 +2,7 @@ package ee.taltech.weather.io.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ee.taltech.weather.WeatherReportFactory;
-import ee.taltech.weather.model.report.api.InvalidStructureException;
+import ee.taltech.weather.exceptions.InvalidStructureException;
 import ee.taltech.weather.model.report.api.ThreeHourIntervalWeatherReportDTO;
 import ee.taltech.weather.model.report.io.WeatherReport;
 import lombok.SneakyThrows;

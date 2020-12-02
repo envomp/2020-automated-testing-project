@@ -1,6 +1,7 @@
 package ee.taltech.weather.model.report.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ee.taltech.weather.exceptions.InvalidStructureException;
 import ee.taltech.weather.model.DateDTO;
 import lombok.*;
 
