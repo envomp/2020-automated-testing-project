@@ -52,6 +52,9 @@ class ConsoleServiceTest {
 
 		when(apiRequestService.fetchForecastReportDTO("x"))
 				.thenThrow(new IOException("Bad name"));
+
+		when(apiRequestService.fetchCurrentWeatherReportDTO("x"))
+				.thenThrow(new IOException("Bad name"));
 	}
 
 	@AfterEach
