@@ -6,6 +6,8 @@
 
 ## Used tech stack
  - Java
+    - Spring boot
+    - Junit
  - Maven
 
 # Running the application
@@ -21,7 +23,15 @@ Or change the location in `.env` file
 
 And finally run `docker-compose run weather_app`
 
-## Locally
+### Running tests and building project with docker
+
+Tests are automatically ran when building the project
+
+```shell script
+docker-compose -f docker-compose-build.yml build weather_app
+```
+
+## Running Locally
 
 Prerequisites:
 - Java
@@ -43,18 +53,19 @@ Or choose a custom location like `./files/input.txt` and run `java -jar target/w
 
 both variables can be set as environment variables (OPEN_WEATHER_MAP_API_KEY and WEATHER_APP_INPUT respectively) as well
 
-If any tests fail locally when running on local machine or when jar doesn't process non ascii characters well, then make sure locale is set to utf-8 or use docker instead
 
-# Running tests
+### Running tests locally
 
-Tests are automatically ran when building the project
-
-Either run:
+if windows:
 ```shell script
-docker-compose -f docker-compose-build.yml build weather_app
+mvnw.cmd test
+```
+else
+```shell script
+./mvnw test
 ```
 
-or use the local run guide up top
+#### If any tests fail locally when running on local machine or when jar doesn't process non ascii characters well, then make sure locale is set to utf-8 or use docker instead
 
 
 # Functional requirements
