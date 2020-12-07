@@ -12,6 +12,12 @@
 
 # Running the application
 
+Output files will be located in the same folder where the input file is.
+
+For example when input location is `files/input.txt` then output will be `files/Tallinn.json` for example
+
+Application supports inputs with `.txt` file extension only
+
 ## With docker
 
 Prerequisites:
