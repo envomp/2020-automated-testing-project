@@ -1,2 +1,1 @@
-Tallinn,Pärnu
-Jõgeva Tartu xxxx
+Tallinn,Tartu,Tapa,Narva

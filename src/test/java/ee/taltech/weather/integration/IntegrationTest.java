@@ -53,8 +53,8 @@ public class IntegrationTest {
 		for (int i = 0; i < weatherReportOutputLocation.size(); i++) {
 			String output = weatherReportOutputLocation.get(i);
 			WeatherReport report = objectMapper.readValue(new File(output), WeatherReport.class);
-			assertEquals(List.of("Tallinn", "Tartu", "Pärnu", "Jõgeva").get(i), report.getWeatherReportDetails().getCity());
-			assertEquals(List.of("59.44,24.75", "58.38,26.73", "58.39,24.50", "58.75,26.39").get(i), report.getWeatherReportDetails().getCoordinates());
+			assertEquals(List.of("Tallinn", "Tartu", "Tapa", "Narva").get(i), report.getWeatherReportDetails().getCity());
+			assertEquals(List.of("59.44,24.75", "58.38,26.73", "59.26,25.96", "59.38,28.19").get(i), report.getWeatherReportDetails().getCoordinates());
 			assertEquals("Celsius", report.getWeatherReportDetails().getTemperatureUnit());
 		}
 	}

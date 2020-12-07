@@ -71,7 +71,7 @@ public class WeatherReportFactory {
 	public static List<String> getWeatherReportOutputLocation() {
 		ClassPathResource resource = new ClassPathResource("sample_passed_inputs.txt");
 		String path = resource.getFile().getAbsolutePath();
-		return List.of("Tallinn", "Tartu", "Pärnu", "Jõgeva")
+		return List.of("Tallinn", "Tartu", "Tapa", "Narva")
 				.stream().map(x -> path.replace("sample_passed_inputs.txt", x + ".json"))
 				.collect(Collectors.toList());
 	}
