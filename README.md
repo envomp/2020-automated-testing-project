@@ -17,7 +17,7 @@ Prerequisites:
 
 Make sure you have `files` directory with `input.txt` inside of it present on the same level as the `docker-compose.yml` file
 
-Or rename `..env` file to `.env` file and put your desired path in there
+Or change the location in `.env` file
 
 And finally run `docker-compose run weather_app`
 
@@ -44,6 +44,18 @@ Or choose a custom location like `./files/input.txt` and run `java -jar target/w
 both variables can be set as environment variables (OPEN_WEATHER_MAP_API_KEY and WEATHER_APP_INPUT respectively) as well
 
 If any tests fail locally when running on local machine or when jar doesn't process non ascii characters well, then make sure locale is set to utf-8 or use docker instead
+
+# Running tests
+
+Tests are automatically ran when building the project
+
+Either run:
+```shell script
+docker-compose -f docker-compose-build.yml build weather_app
+```
+
+or use the local run guide up top
+
 
 # Functional requirements
 

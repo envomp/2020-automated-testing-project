@@ -1,5 +1,10 @@
 FROM openjdk:11 AS build
 COPY . .
+
+# change mvnw file ending
+RUN apt-get update && apt-get install dos2unix
+RUN dos2unix mvnw
+RUN chmod +x mvnw
 RUN ./mvnw clean install
 
 
