@@ -100,7 +100,7 @@ else
 ## Read multiple city names from file and produce a JSON output file for each city
 - [X] Can read multiple cities from file
 - [X] Can create weather report for given cities into separate JSON files
-- [X] Log WARN message when existing weather report file for city is being overwritten
+- [X] Log INFO message when existing weather report file for city is being overwritten
 - [X] When an error occurs for invalid city name(s) then weather reports are created only for valid city names 
 - [X] When an error occurs for invalid city name(s) then application logs ERROR message for that city.
 

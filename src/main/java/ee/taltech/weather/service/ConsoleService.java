@@ -48,7 +48,7 @@ public class ConsoleService {
 
 	private void writeCityResultToOutput(String name, String outputPath) {
 		if (new File(outputPath).exists()) {
-			logger.warn("File at output path: {} already exists", outputPath);
+			logger.info("File at output path: {} already exists", outputPath);
 		}
 
 		try {
